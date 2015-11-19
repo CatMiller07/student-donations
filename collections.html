@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+   <head>
+	  <title>Student Donations Page</title>
+	  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	   
+	</head>
+ 
+    <body>
+	   <div class="container">
+		   <h1> Record Donations:</h1>
+		   <div class="row">
+			   <div class="col-xs-12 col-md-4 col-md-push-1 form-group">
+                    <label for="student-id">Student ID</label>
+                    <input class="form-control" type="text" id="student-id">
+                </div>
+                
+                <div class="col-xs-12 col-md-4 col-md-push-3">
+                    <label for="student-donation">Student Donation</label>
+                    <input class="form-control" type="text" id="student-donation">
+                </div>
+			  
+		   </div>
+		    <div class="row">
+                <center>
+                    <button class="btn btn-primary" id="btn-submit">Submit</button>
+                </center>
+            </div>
+		 
+		</div>
+		  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		  <script>
+            /*
+            1) atach an event handler to fun a function when you click 
+                on the button
+            2) Make that event handler say console.log("it's working") to
+            verify it's working
+            3) From within your event handler, create 2 variables and 
+            give them the values of whatever is in the input text boxes
+                -> use the jquery .val() function
+            4) log those values to make sure that it's working
+            5) Use the ajax post recipe to send a request to your localhost
+            server and write to the db
+            */
+			  
+			$(".btn").click(function(){
+				 console.log("the button works!");
+				 var pstudentId = "/" + "'" $("#student-id").val() +;
+				 var pdonationAmt="/" +  $("#student-donation").val();
+				
+				 console.log("Student: "+pstudentId);
+				 console.log("Donation$: "+pdonationAmt);
+				 var myURL = "http://localhost:9001/transactions"+pstudentId+pdonationAmt;
+				 $.ajax({
+					 url:myURL,
+					 method:"POST",
+					 success:function(res,text,jqxhr){
+					        console.log("DB Record Added");	   
+					 }
+				 });
+			})  
+        </script>
+	</body>
+
+
+
+
+
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+	 <!-- Compiled and minified CSS -->
+     <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+     <style>
+		 .listTitle{
+			 text-align: center;
+		 }
+		 #mylist{
+			 text-align: center;
+		 }	
+	 </style>
+	</head>
+	<body>
+	 <div class="container"></div>
+	 <div class="row queryresult">	
+		 <h2 class="listTitle">Student Donations</h2>
+		 <ul id="mylist">
+
+		 </ul>
+	 </div>
+	</div>	
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+    <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+	<script>
+       	   $.ajax({
+			      url:"http://localhost:9001/transactions",
+			    
+			    success:function(res){
+					    var myhtml="";
+					     console.log('the function call worked!'+res);
+					  
+					     for(var x = 0; x < res.length; x++){
+							 myhtml = "<li>"+ Student: " +res[x].sid +"<br>"+"donation: "+res[x].donation+"</li>";
+							 $('#mylist').append(myhtml);
+						 }
+				       },
+			     error:function(res,status,errMsg){
+					  alert('This failed with status ' + status);
+				 }
+			   
+		   })	 
+	</script>
+	</body>
+</html>
