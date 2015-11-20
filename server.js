@@ -27,8 +27,9 @@ app.use(function(req, res, next){
 app.use(    bodyParser.urlencoded( {extended: true})    );
 
 app.get('/transactions', function(req,res){
-	connection.query("SELECT * FROM transactions", function(err, rows){
+	connection.query("SELECT sid, ROUND(sum(donation),2) as totl FROM transactions group by sid", function(err, rows){
         if (!err){
+		    console.log('the solution is: ',rows);
             res.setHeader("Content-Type", "application/json");
 			res.end(JSON.stringify(rows));//Important! this is how you actually
                                           //send back a response

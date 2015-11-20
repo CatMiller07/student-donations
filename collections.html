@@ -46,8 +46,8 @@
 			  
 			$(".btn").click(function(){
 				 console.log("the button works!");
-				 var pstudentId = "/" + "'" $("#student-id").val() +;
-				 var pdonationAmt="/" +  $("#student-donation").val();
+				 var pstudentId = "/" + $("#student-id").val() ;
+				 var pdonationAmt="/" + $("#student-donation").val();
 				
 				 console.log("Student: "+pstudentId);
 				 console.log("Donation$: "+pdonationAmt);
@@ -57,8 +57,15 @@
 					 method:"POST",
 					 success:function(res,text,jqxhr){
 					        console.log("DB Record Added");	   
-					 }
+					 },
+					 error:function(res){
+						 alert("you probably forgot to start the node server");
+					 };
+					 
+					 
 				 });
+				 // clear input fields
+				  $("input").val("");
 			})  
         </script>
 	</body>

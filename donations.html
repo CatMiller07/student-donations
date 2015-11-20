@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+   <head>
+	<title>Student Donations Page</title>
+	  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	   <!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+	  <style>
+		  h2,h3{
+			  text-align: center;
+		  }
+		  thead{
+			  font-weight: bold;
+			  font-size: 13px:
+			
+		  }
+		  tr,td{
+			  width: 50%;
+			  text-align: center;
+			 
+			  
+			  
+		  }
+	   </style> 
+   </head>
+	
+   <body>
+	    <div class="jumbotron">
+	    <div class="container">
+		   <h2>Total Donations</h2>
+		   <h3>by Student:</h3>	
+			 
+		    <table class="table">
+				<thead class="tbl-colhdgs">
+					  <td>Student</td>
+					  <td>Total Donations</td>	
+				</thead>   
+				
+			</table>	
+		  </div>
+		  </div>	
+	 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	 <script>
+		      //get data and load
+	          $(document).ready(function(){
+				 $.ajax({
+						 url:"http://localhost:9001/transactions",
+						success:function(res,text,jqxhr){ 
+							console.log(res);
+							
+							for(var i=0; i<res.length; i++){
+								
+								$("table").append(
+								"<tr><td>"+ res[i].sid +"</td>"+"<td>"+res[i].totl + "</td></tr>");
+						    }
+			            }
+				  });
+				  				
+								
+			   });			   
+	 </script>
+   </body>	
+
+
+
+</html>
