@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+   <head>
+	<title>Student Donations Page</title>
+	  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	  
+	  <style>
+		  h2,h3{
+			  text-align: center;
+		  }
+		  thead{
+			  font-weight: bold;
+			  font-size: 13px:
+			
+		  }
+		  tr,td{
+			 
+			  text-align: center;
+			 
+			  
+			  
+		  }
+	   </style> 
+   </head>
+	
+   <body>
+	    <div class="jumbotron">
+	    <div class="container">
+		   <h2>Total Donations</h2>
+		   <h3>by Student Grade</h3>	
+		<div class="row">	
+		<div class="col-xs-6  col-md-2 col-md-push2">
+             <div id = "btn9" class ="btn btn-primary">9th grade</div>
+         </div>
+		<div class="col-xs-6 col-md-2 col-md-push2">
+             <div id = "btn10" class ="btn btn-primary">10th grade</div>
+         </div>
+		<div class="col-xs-6 col-md-2 col-md-push2">
+             <div id = "btn11" class ="btn btn-primary">11th grade</div>
+         </div>	
+		<div class="col-xs-6 col-md-2 col-md-push2">
+             <div id = "btn12" class ="btn btn-primary">12th grade</div>
+         </div>	
+		 	
+		</div>	
+		<div>	
+		    <table class="table">
+				<thead class="tbl-colhdgs">
+					  <td>Student</td>
+					   <td>First Name</td>
+					   <td>Last Name</td>
+					   <td>Grade</td>
+					  <td>Total Donations</td>	
+				</thead>   
+				 <tbody id="query-output">
+                        
+                    </tbody>
+			</table>
+			</div>
+		  </div>
+		  </div>	
+	 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	 <script>
+		      //get data and load
+	          $(document).ready(function(){
+				  function requestData(grade) {
+					  
+					 $("#query-output").html(""); //clear table
+					  
+				     var reqURL ="http://localhost:9001/bygrade"+"/"+grade;
+							 $.ajax({
+									 url:reqURL,
+									success:function(res,text,jqxhr){ 
+										console.log(res);
+
+										for(var i=0; i<res.length; i++){
+
+											$("table").append(
+											"<tr><td>"+ res[i].sid +"</td>"+
+											"<td>"+res[i].fname + "</td>" +
+											"<td>"+ res[i].lname +"</td>"+
+											"<td>"+ res[i].grade +"</td>"+	
+											"<td>"+res[i].totl + "</td></tr>");
+										}
+									}
+							  });
+				  }
+					
+				  $("#btn9").on("click",function(){
+					  console.log("9th grade");
+					  requestData('9');   
+				  });
+				  $("#btn10").on("click",function(){
+					  console.log("10th grade");
+					  requestData('10');   
+				  });
+				  $("#btn11").on("click",function(){
+					  console.log("11th grade");
+					  requestData('11');   
+				  });
+				  $("#btn12").on("click",function(){
+					  console.log("12th grade");
+					  requestData('12');   
+				  });
+			   });			   
+	 </script>
+   </body>	
+
+
+
+</html>

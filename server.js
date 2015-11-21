@@ -39,6 +39,28 @@ app.get('/transactions', function(req,res){
     });
 });
 
+app.get('/bygrade/:grade', function(req,res){
+    var grade = req.params.grade;
+    var dynSelect = "SELECT L.sid,L.fname,L.lname,round(sum(c.donation),2) as totl"+
+		             "  FROM(SELECT a.sid,a.fname,a.lname,b.grade from students a" +
+		             "  JOIN sections b on a.section_id = b.section_id) as l join transactions c " +
+		             " on l.sid = c.sid  " + 
+					 " where l.grade = '" + grade + "'  Group by l.sid,l.fname,l.lname" ;
+	    console.log(dynSelect);
+    connection.query( dynSelect,function(err,rows){       	
+					 
+        if (err){
+            console.log("DB query failed: "+error);
+            res.end("DB error");
+        }
+        else{
+            console.log("DB query succeeded"+rows);
+			res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify(rows));
+        }
+    });
+});
+
 app.post('/transactions/:sid/:donation', function(req, res){
     var sid = req.params.sid;
     var donation = req.params.donation;
@@ -54,6 +76,7 @@ app.post('/transactions/:sid/:donation', function(req, res){
         }
     });
 });
+
 
 app.listen(port);
 console.log("Server listening on port "+port);
