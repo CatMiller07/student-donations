@@ -41,7 +41,7 @@ app.get('/transactions', function(req,res){
 
 app.get('/bygrade/:grade', function(req,res){
     var grade = req.params.grade;
-    var dynSelect = "SELECT L.sid,L.fname,L.lname,round(sum(c.donation),2) as totl"+
+    var dynSelect = "SELECT L.sid,L.fname,L.lname,l.grade,round(sum(c.donation),2) as totl"+
 		             "  FROM(SELECT a.sid,a.fname,a.lname,b.grade from students a" +
 		             "  JOIN sections b on a.section_id = b.section_id) as l join transactions c " +
 		             " on l.sid = c.sid  " + 
@@ -59,6 +59,41 @@ app.get('/bygrade/:grade', function(req,res){
             res.end(JSON.stringify(rows));
         }
     });
+});
+
+app.get('/bysection/:sectionid', function(req, res){
+
+	 var sectionid = req.params.sectionid;
+	 var queryStr = "SELECT * from students NATURAL JOIN (SELECT sid, sum(donation) as total_donation from transactions"
+	               + " GROUP BY sid ) AS trans  WHERE students.section_id ='" + sectionid + "'" ;
+	
+	  connection.query(queryStr, function(err,rows){
+			if (err) {
+				  console.log("DB error-Section ID Query Failed"); 
+			}
+			else{
+				console.log("Query by grade succeeded");
+				res.setHeader("Content-Type", "application/json");
+				res.end(JSON.stringify(rows));
+			}
+		});
+	
+});
+
+app.get('/getsections/:grade', function(req,res){
+	var grade = req.params.grade ;
+	var queryStr = "SELECT section_id, teacher_name from sections WHERE " +
+		           "grade = '" + grade + "'";
+	    connection.query(queryStr, function(err,rows){
+			if (err) {
+				  console.log("DB error"); 
+			}
+			else{
+				console.log("Query by grade succeeded");
+				res.setHeader("Content-Type", "application/json");
+				res.end(JSON.stringify(rows));
+			}
+		});
 });
 
 app.post('/transactions/:sid/:donation', function(req, res){
